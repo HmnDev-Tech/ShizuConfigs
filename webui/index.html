@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>ShizuConfigs — ADB Command Center</title>
+  <meta name="description" content="All-in-one ADB command center with Material 3 WebUI for Shizuku">
+  <link rel="stylesheet" href="vendor/beer.min.css">
+  <link rel="stylesheet" href="vendor/material-symbols.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="module" src="vendor/beer.min.js"></script>
+</head>
+<body class="dark">
+
+  <!-- Navigation Rail (desktop) / Bottom Nav (mobile) -->
+  <nav class="left m l" id="nav-rail">
+    <header>
+      <nav>
+        <img src="" class="circle" style="display:none">
+        <div class="nav-logo">
+          <i class="material-symbols-outlined" style="font-size:28px;color:var(--primary)">terminal</i>
+        </div>
+      </nav>
+    </header>
+    <a class="active" data-page="dashboard" onclick="App.navigate('dashboard')">
+      <i class="material-symbols-outlined">dashboard</i>
+      <div>Главная</div>
+    </a>
+    <a data-page="packages" onclick="App.navigate('packages')">
+      <i class="material-symbols-outlined">inventory_2</i>
+      <div>Пакеты</div>
+    </a>
+    <a data-page="settings" onclick="App.navigate('settings')">
+      <i class="material-symbols-outlined">tune</i>
+      <div>Настройки</div>
+    </a>
+    <a data-page="display" onclick="App.navigate('display')">
+      <i class="material-symbols-outlined">screenshot_monitor</i>
+      <div>Экран</div>
+    </a>
+    <a data-page="performance" onclick="App.navigate('performance')">
+      <i class="material-symbols-outlined">speed</i>
+      <div>Система</div>
+    </a>
+    <a data-page="network" onclick="App.navigate('network')">
+      <i class="material-symbols-outlined">wifi</i>
+      <div>Сеть</div>
+    </a>
+    <a data-page="commands" onclick="App.navigate('commands')">
+      <i class="material-symbols-outlined">code</i>
+      <div>Команды</div>
+    </a>
+  </nav>
+
+  <!-- Bottom nav for small screens -->
+  <nav class="bottom s" id="nav-bottom">
+    <a class="active" data-page="dashboard" onclick="App.navigate('dashboard')">
+      <i class="material-symbols-outlined">dashboard</i>
+    </a>
+    <a data-page="packages" onclick="App.navigate('packages')">
+      <i class="material-symbols-outlined">inventory_2</i>
+    </a>
+    <a data-page="settings" onclick="App.navigate('settings')">
+      <i class="material-symbols-outlined">tune</i>
+    </a>
+    <a data-page="display" onclick="App.navigate('display')">
+      <i class="material-symbols-outlined">screenshot_monitor</i>
+    </a>
+    <a data-page="performance" onclick="App.navigate('performance')">
+      <i class="material-symbols-outlined">speed</i>
+    </a>
+    <a data-page="network" onclick="App.navigate('network')">
+      <i class="material-symbols-outlined">wifi</i>
+    </a>
+    <a data-page="commands" onclick="App.navigate('commands')">
+      <i class="material-symbols-outlined">code</i>
+    </a>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="responsive max">
+    <!-- Top App Bar -->
+    <header class="fixed">
+      <nav>
+        <button class="circle transparent s" onclick="ui('#nav-drawer')">
+          <i class="material-symbols-outlined">menu</i>
+        </button>
+        <h6 class="max" id="page-title-bar">ShizuConfigs</h6>
+        <div id="status-indicator" class="chip no-elevate status-chip">
+          <i class="material-symbols-outlined" id="status-icon">cloud_off</i>
+          <span id="status-text">Нет связи</span>
+        </div>
+        <button class="circle transparent" id="theme-toggle-btn" onclick="App.toggleTheme()">
+          <i class="material-symbols-outlined" id="theme-icon">dark_mode</i>
+        </button>
+      </nav>
+    </header>
+
+    <!-- Mobile drawer -->
+    <dialog id="nav-drawer" class="left">
+      <header>
+        <nav>
+          <div class="nav-logo">
+            <i class="material-symbols-outlined" style="font-size:28px;color:var(--primary)">terminal</i>
+          </div>
+          <h6 class="max">ShizuConfigs</h6>
+          <button class="circle transparent" onclick="ui('#nav-drawer')">
+            <i class="material-symbols-outlined">close</i>
+          </button>
+        </nav>
+      </header>
+      <a data-page="dashboard" onclick="App.navigate('dashboard');ui('#nav-drawer')">
+        <i class="material-symbols-outlined">dashboard</i><div>Главная</div>
+      </a>
+      <a data-page="packages" onclick="App.navigate('packages');ui('#nav-drawer')">
+        <i class="material-symbols-outlined">inventory_2</i><div>Пакеты</div>
+      </a>
+      <a data-page="settings" onclick="App.navigate('settings');ui('#nav-drawer')">
+        <i class="material-symbols-outlined">tune</i><div>Настройки</div>
+      </a>
+      <a data-page="display" onclick="App.navigate('display');ui('#nav-drawer')">
+        <i class="material-symbols-outlined">screenshot_monitor</i><div>Экран</div>
+      </a>
+      <a data-page="performance" onclick="App.navigate('performance');ui('#nav-drawer')">
+        <i class="material-symbols-outlined">speed</i><div>Система</div>
+      </a>
+      <a data-page="network" onclick="App.navigate('network');ui('#nav-drawer')">
+        <i class="material-symbols-outlined">wifi</i><div>Сеть</div>
+      </a>
+      <a data-page="commands" onclick="App.navigate('commands');ui('#nav-drawer')">
+        <i class="material-symbols-outlined">code</i><div>Команды</div>
+      </a>
+    </dialog>
+
+    <!-- Page Container -->
+    <div class="page-container" id="page-container" style="padding-top:16px"></div>
+  </main>
+
+  <!-- Snackbar Container -->
+  <div id="snackbar-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/shell.js"></script>
+  <script src="js/configs.js"></script>
+  <script src="js/modules/dashboard.js"></script>
+  <script src="js/modules/packages.js"></script>
+  <script src="js/modules/settings.js"></script>
+  <script src="js/modules/display.js"></script>
+  <script src="js/modules/performance.js"></script>
+  <script src="js/modules/network.js"></script>
+  <script src="js/modules/commands.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,273 @@
+/* ShizuConfigs — Custom styles on top of BeerCSS Material 3 */
+
+/* ═══ Custom M3 color scheme ═══ */
+:root {
+  --primary: #bb86fc;
+  --on-primary: #1b0040;
+  --primary-container: #3700b3;
+  --on-primary-container: #eaddff;
+  --secondary: #03dac6;
+  --on-secondary: #003731;
+  --secondary-container: #005048;
+  --on-secondary-container: #70f5e8;
+  --tertiary: #ec4899;
+  --on-tertiary: #4a0025;
+  --tertiary-container: #6b1040;
+  --on-tertiary-container: #ffd8e8;
+  --error: #f2b8b5;
+  --on-error: #601410;
+  --surface: #0f0f1a;
+  --on-surface: #e6e1e5;
+  --on-surface-variant: #a9a5b0;
+  --surface-container: #1a1a2e;
+  --surface-container-high: #222240;
+  --surface-container-highest: #2a2a4a;
+  --outline: #49454f;
+  --outline-variant: #35313a;
+  --inverse-surface: #e6e1e5;
+  --inverse-on-surface: #1c1b1f;
+}
+
+/* Light theme overrides */
+body:not(.dark) {
+  --primary: #6750a4;
+  --on-primary: #ffffff;
+  --primary-container: #eaddff;
+  --on-primary-container: #21005d;
+  --secondary: #006b60;
+  --on-secondary: #ffffff;
+  --secondary-container: #70f5e8;
+  --on-secondary-container: #00201c;
+  --tertiary: #b3266a;
+  --on-tertiary: #ffffff;
+  --tertiary-container: #ffd8e8;
+  --on-tertiary-container: #3e0021;
+  --surface: #fffbfe;
+  --on-surface: #1c1b1f;
+  --on-surface-variant: #49454f;
+  --surface-container: #f3edf7;
+  --surface-container-high: #ece6f0;
+  --surface-container-highest: #e6e0e9;
+  --outline: #79747e;
+  --outline-variant: #c4c0ca;
+}
+
+/* ═══ Nav logo ═══ */
+.nav-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: var(--primary-container);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 8px auto 4px;
+}
+
+/* ═══ Status chip ═══ */
+.status-chip {
+  font-size: .75rem !important;
+  height: 28px !important;
+  padding: 0 10px !important;
+}
+.status-chip.connected {
+  background: var(--secondary-container) !important;
+  color: var(--on-secondary-container) !important;
+}
+.status-chip.disconnected {
+  background: var(--surface-container-high) !important;
+  color: var(--on-surface-variant) !important;
+}
+.status-chip i {
+  font-size: 16px !important;
+}
+
+/* ═══ Terminal / Code output ═══ */
+.terminal-output {
+  background: #0d0d14;
+  border: 1px solid var(--outline-variant);
+  border-radius: 12px;
+  padding: 16px;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Roboto Mono', monospace;
+  font-size: .8rem;
+  line-height: 1.7;
+  max-height: 400px;
+  overflow-y: auto;
+  color: #a8e6a3;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+body:not(.dark) .terminal-output {
+  background: #f5f3f7;
+  color: #1c1b1f;
+  border-color: var(--outline-variant);
+}
+.terminal-output .cmd-prompt { color: var(--primary); font-weight: 600; }
+.terminal-output .cmd-error { color: var(--error); }
+.terminal-output .cmd-info { color: var(--secondary); opacity: .7; }
+
+/* ═══ Progress gauge ═══ */
+.gauge-bar {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--surface-container-highest);
+  overflow: hidden;
+}
+.gauge-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: var(--primary);
+  transition: width .6s cubic-bezier(.2,0,0,1);
+}
+.gauge-bar-fill.warn { background: #fbbf24; }
+.gauge-bar-fill.danger { background: var(--error); }
+.gauge-bar-fill.success { background: var(--secondary); }
+
+/* ═══ Stat grid ═══ */
+.stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.stat-item {
+  padding: 4px 0;
+}
+.stat-label {
+  font-size: .65rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  color: var(--on-surface-variant);
+  margin-bottom: 2px;
+}
+.stat-value {
+  font-size: .85rem;
+  font-weight: 500;
+}
+
+/* ═══ Hero card (gradient header) ═══ */
+.hero-card {
+  background: linear-gradient(135deg, var(--primary), var(--tertiary));
+  border-radius: 28px;
+  padding: 24px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.hero-card::after {
+  content: '';
+  position: absolute;
+  top: -60%;
+  right: -40%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero-card * { position: relative; z-index: 1; }
+
+/* ═══ Not connected state ═══ */
+.not-connected-card {
+  text-align: center;
+  padding: 48px 24px;
+}
+.not-connected-card i {
+  font-size: 56px;
+  color: var(--on-surface-variant);
+  margin-bottom: 12px;
+  display: block;
+}
+
+/* ═══ Page transition ═══ */
+.page-container {
+  animation: pageSlideIn .35s cubic-bezier(.2,0,0,1);
+}
+@keyframes pageSlideIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══ Grid layouts ═══ */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px;
+}
+
+/* ═══ Preset card hover ═══ */
+.preset-card {
+  cursor: pointer;
+  transition: transform .2s cubic-bezier(.2,0,0,1), box-shadow .2s;
+}
+.preset-card:hover {
+  transform: translateY(-2px);
+}
+
+/* ═══ Search bar custom ═══ */
+.search-wrap {
+  position: relative;
+  margin-bottom: 12px;
+}
+.search-wrap i {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--on-surface-variant);
+  font-size: 20px;
+}
+.search-wrap input {
+  padding-left: 44px !important;
+}
+
+/* ═══ List item improvements ═══ */
+.setting-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background .15s;
+}
+.setting-row:hover {
+  background: var(--surface-container);
+}
+.setting-row .material-symbols-outlined {
+  color: var(--primary);
+  font-size: 22px;
+  flex-shrink: 0;
+}
+.setting-row-content {
+  flex: 1;
+  min-width: 0;
+}
+.setting-row-title {
+  font-size: .85rem;
+  font-weight: 500;
+}
+.setting-row-desc {
+  font-size: .75rem;
+  color: var(--on-surface-variant);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ═══ Responsive ═══ */
+@media (max-width: 600px) {
+  .grid-2 { grid-template-columns: 1fr; }
+  .grid-3 { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+  .hero-card { border-radius: 20px; padding: 20px; }
+}
+
+/* ═══ Custom scrollbar (dark) ═══ */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--outline); border-radius: 10px; }

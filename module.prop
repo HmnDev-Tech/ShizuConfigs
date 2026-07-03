@@ -1,0 +1,9 @@
+id=shizu-configs
+name=ShizuConfigs
+version=1.0.0
+versionCode=1
+author=HDev
+description=All-in-one ADB command center with Material You WebUI. Manage packages, settings, display, performance, network, and custom commands.
+banner=banner.png
+webui=webui
+usesShellBridge=true
