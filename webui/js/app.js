@@ -5,13 +5,13 @@
 
 const App = (() => {
   const pages = {
-    dashboard:   { module: () => DashboardModule,    icon: 'dashboard',          label: 'Главная' },
-    packages:    { module: () => PackagesModule,     icon: 'inventory_2',        label: 'Пакеты' },
-    settings:    { module: () => SettingsModule,     icon: 'tune',               label: 'Настройки' },
-    display:     { module: () => DisplayModule,      icon: 'screenshot_monitor', label: 'Экран' },
-    performance: { module: () => PerformanceModule,  icon: 'speed',              label: 'Система' },
-    network:     { module: () => NetworkModule,      icon: 'wifi',               label: 'Сеть' },
-    commands:    { module: () => CommandsModule,     icon: 'code',               label: 'Команды' },
+    dashboard:   { module: () => DashboardModule,    icon: 'dashboard',          label: 'Dashboard' },
+    packages:    { module: () => PackagesModule,     icon: 'inventory_2',        label: 'Packages' },
+    settings:    { module: () => SettingsModule,     icon: 'tune',               label: 'Settings' },
+    display:     { module: () => DisplayModule,      icon: 'screenshot_monitor', label: 'Display' },
+    performance: { module: () => PerformanceModule,  icon: 'speed',              label: 'Performance' },
+    network:     { module: () => NetworkModule,      icon: 'wifi',               label: 'Network' },
+    commands:    { module: () => CommandsModule,     icon: 'code',               label: 'Commands' },
   };
   let currentPage = 'dashboard';
   let isDark = true;
@@ -57,7 +57,7 @@ const App = (() => {
     chip.classList.toggle('connected', conn);
     chip.classList.toggle('disconnected', !conn);
     icon.textContent = conn ? 'cloud_done' : 'cloud_off';
-    text.textContent = conn ? 'Подключён' : 'Нет связи';
+    text.textContent = conn ? 'Connected' : 'No Connection';
   }
 
   function toggleTheme() {
@@ -87,14 +87,14 @@ const App = (() => {
 
   function requireConnection() {
     if (!ShellBridge.isConnected()) {
-      toast('Shizuku не подключен', 'error');
+      toast('Shizuku is not connected', 'error');
       return false;
     }
     return true;
   }
 
   return { init, navigate, toast, updateStatus, requireConnection, toggleTheme };
-})();
+ })();
 
 window.App = App;
 document.addEventListener('DOMContentLoaded', () => {

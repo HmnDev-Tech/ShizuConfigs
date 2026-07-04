@@ -10,7 +10,7 @@ const DashboardModule = (() => {
           <i class="material-symbols-outlined" style="font-size:36px">shield</i>
           <div>
             <h6 style="margin:0;color:#fff">Shizuku Bridge</h6>
-            <div id="dash-bridge-status" style="font-size:.85rem;opacity:.85">Проверка...</div>
+            <div id="dash-bridge-status" style="font-size:.85rem;opacity:.85">Checking...</div>
           </div>
         </div>
         <div class="row" style="gap:8px">
@@ -23,8 +23,8 @@ const DashboardModule = (() => {
       <div id="dash-not-connected" style="display:none">
         <article class="not-connected-card">
           <i class="material-symbols-outlined">power_off</i>
-          <h6>Shizuku не подключен</h6>
-          <p>Откройте WebUI через Shizuku Manager</p>
+          <h6>Shizuku is not connected</h6>
+          <p>Open WebUI via Shizuku Manager</p>
         </article>
       </div>
 
@@ -35,7 +35,7 @@ const DashboardModule = (() => {
               <div class="row no-wrap" style="align-items:center;gap:12px;margin-bottom:12px">
                 <button class="circle small primary-container"><i class="material-symbols-outlined">smartphone</i></button>
                 <div>
-                  <h6 class="small no-margin">Устройство</h6>
+                  <h6 class="small no-margin">Device</h6>
                   <div class="small" id="dash-model" style="color:var(--on-surface-variant)">—</div>
                 </div>
               </div>
@@ -47,7 +47,7 @@ const DashboardModule = (() => {
               <div class="row no-wrap" style="align-items:center;gap:12px;margin-bottom:12px">
                 <button class="circle small secondary-container"><i class="material-symbols-outlined">build</i></button>
                 <div>
-                  <h6 class="small no-margin">Система</h6>
+                  <h6 class="small no-margin">System</h6>
                   <div class="small" id="dash-android" style="color:var(--on-surface-variant)">—</div>
                 </div>
               </div>
@@ -57,7 +57,7 @@ const DashboardModule = (() => {
         </div>
 
         <h6 class="small" style="margin:20px 0 10px;color:var(--on-surface-variant)">
-          <i class="material-symbols-outlined" style="font-size:18px;vertical-align:middle">monitoring</i> Ресурсы
+          <i class="material-symbols-outlined" style="font-size:18px;vertical-align:middle">monitoring</i> Resources
         </h6>
         <div class="grid-2">
           <article class="no-padding">
@@ -73,7 +73,7 @@ const DashboardModule = (() => {
           <article class="no-padding">
             <div class="padding">
               <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:8px">
-                <span class="bold"><i class="material-symbols-outlined" style="font-size:18px;vertical-align:middle">hard_drive</i> Диск</span>
+                <span class="bold"><i class="material-symbols-outlined" style="font-size:18px;vertical-align:middle">hard_drive</i> Storage</span>
                 <span class="chip small no-elevate primary-container" id="dash-storage-pct">—</span>
               </div>
               <div class="gauge-bar"><div class="gauge-bar-fill" id="dash-storage-bar" style="width:0"></div></div>
@@ -83,20 +83,20 @@ const DashboardModule = (() => {
         </div>
 
         <h6 class="small" style="margin:20px 0 10px;color:var(--on-surface-variant)">
-          <i class="material-symbols-outlined" style="font-size:18px;vertical-align:middle">bolt</i> Быстрые действия
+          <i class="material-symbols-outlined" style="font-size:18px;vertical-align:middle">bolt</i> Quick Actions
         </h6>
         <div class="row wrap" style="gap:6px">
-          <button class="chip border" onclick="DashboardModule.quickAction('pkgcount')"><i class="material-symbols-outlined">inventory_2</i> Пакеты</button>
-          <button class="chip border" onclick="DashboardModule.quickAction('battery')"><i class="material-symbols-outlined">battery_full</i> Батарея</button>
-          <button class="chip border" onclick="DashboardModule.quickAction('uptime')"><i class="material-symbols-outlined">schedule</i> Аптайм</button>
-          <button class="chip border" onclick="DashboardModule.quickAction('thermal')"><i class="material-symbols-outlined">thermostat</i> Термо</button>
-          <button class="chip border" onclick="DashboardModule.quickAction('kernel')"><i class="material-symbols-outlined">memory</i> Ядро</button>
-          <button class="chip border" onclick="DashboardModule.quickAction('snapshot')"><i class="material-symbols-outlined">photo_camera</i> Снимок</button>
+          <button class="chip border" onclick="DashboardModule.quickAction('pkgcount')"><i class="material-symbols-outlined">inventory_2</i> Packages</button>
+          <button class="chip border" onclick="DashboardModule.quickAction('battery')"><i class="material-symbols-outlined">battery_full</i> Battery</button>
+          <button class="chip border" onclick="DashboardModule.quickAction('uptime')"><i class="material-symbols-outlined">schedule</i> Uptime</button>
+          <button class="chip border" onclick="DashboardModule.quickAction('thermal')"><i class="material-symbols-outlined">thermostat</i> Thermal</button>
+          <button class="chip border" onclick="DashboardModule.quickAction('kernel')"><i class="material-symbols-outlined">memory</i> Kernel</button>
+          <button class="chip border" onclick="DashboardModule.quickAction('snapshot')"><i class="material-symbols-outlined">photo_camera</i> Snapshot</button>
         </div>
         <div id="dash-quick-output" class="terminal-output" style="margin-top:12px;display:none"></div>
 
         <h6 class="small" style="margin:20px 0 10px;color:var(--on-surface-variant)">
-          <i class="material-symbols-outlined" style="font-size:18px;vertical-align:middle">history</i> Последние команды
+          <i class="material-symbols-outlined" style="font-size:18px;vertical-align:middle">history</i> Recent Commands
         </h6>
         <div id="dash-history-list"></div>
       </div>`;
@@ -108,8 +108,8 @@ const DashboardModule = (() => {
     document.getElementById('dash-connected').style.display = conn ? 'block' : 'none';
 
     const info = ShellBridge.getModuleInfo();
-    document.getElementById('dash-bridge-status').textContent = conn ? 'Подключён' : 'Не подключён';
-    document.getElementById('dash-mode-badge').textContent = info ? (info.accessMode || 'нет') : 'нет';
+    document.getElementById('dash-bridge-status').textContent = conn ? 'Connected' : 'Not Connected';
+    document.getElementById('dash-mode-badge').textContent = info ? (info.accessMode || 'none') : 'none';
     
     if (info && info.trusted) {
       document.getElementById('dash-trusted-badge').textContent = 'Full Trust';
@@ -142,16 +142,16 @@ const DashboardModule = (() => {
     const brand = _prop('ro.product.brand');
     _s('dash-model').textContent = `${brand} ${model}`;
     _s('dash-device-info').innerHTML =
-      _stat('Устройство', _prop('ro.product.device')) +
-      _stat('Архитектура', _prop('ro.product.cpu.abi')) +
-      _stat('Производитель', _prop('ro.product.manufacturer')) +
-      _stat('Ядро', ShellBridge.exec('uname -r').stdout?.trim() || '—');
+      _stat('Device', _prop('ro.product.device')) +
+      _stat('Architecture', _prop('ro.product.cpu.abi')) +
+      _stat('Manufacturer', _prop('ro.product.manufacturer')) +
+      _stat('Kernel', ShellBridge.exec('uname -r').stdout?.trim() || '—');
     const android = _prop('ro.build.version.release');
     const sdk = _prop('ro.build.version.sdk');
     _s('dash-android').textContent = `Android ${android} (SDK ${sdk})`;
     _s('dash-system-info').innerHTML =
-      _stat('Сборка', _prop('ro.build.display.id')) +
-      _stat('Патч', _prop('ro.build.version.security_patch'));
+      _stat('Build', _prop('ro.build.display.id')) +
+      _stat('Patch', _prop('ro.build.version.security_patch'));
   }
 
   function loadResources() {
@@ -183,7 +183,7 @@ const DashboardModule = (() => {
     const el = _s('dash-history-list');
     const hist = ShellBridge.getHistory().slice(0, 5);
     if (!hist.length) {
-      el.innerHTML = '<article class="not-connected-card" style="padding:24px"><i class="material-symbols-outlined">terminal</i><p>Команды ещё не выполнялись</p></article>';
+      el.innerHTML = '<article class="not-connected-card" style="padding:24px"><i class="material-symbols-outlined">terminal</i><p>No commands executed yet</p></article>';
       return;
     }
     el.innerHTML = hist.map(h => `
@@ -197,7 +197,7 @@ const DashboardModule = (() => {
   }
 
   function quickAction(action) {
-    if (!ShellBridge.isConnected()) { App.toast('Shizuku не подключен', 'error'); return; }
+    if (!ShellBridge.isConnected()) { App.toast('Shizuku is not connected', 'error'); return; }
     const out = _s('dash-quick-output');
     out.style.display = 'block';
     let r;
@@ -206,7 +206,7 @@ const DashboardModule = (() => {
         const all = ShellBridge.exec('pm list packages');
         const sys = ShellBridge.exec('pm list packages -s');
         const usr = ShellBridge.exec('pm list packages -3');
-        r = `📦 Количество пакетов\n  Всего:     ${all.ok ? all.stdout.trim().split('\n').length : '?'}\n  Системных: ${sys.ok ? sys.stdout.trim().split('\n').length : '?'}\n  Пользовательских: ${usr.ok ? usr.stdout.trim().split('\n').length : '?'}`;
+        r = `📦 Packages Count\n  Total:     ${all.ok ? all.stdout.trim().split('\n').length : '?'}\n  System:    ${sys.ok ? sys.stdout.trim().split('\n').length : '?'}\n  User:      ${usr.ok ? usr.stdout.trim().split('\n').length : '?'}`;
         break;
       case 'battery': r = ShellBridge.exec('dumpsys battery'); r = r.ok ? r.stdout : r.stderr; break;
       case 'uptime': r = ShellBridge.exec('uptime'); r = r.ok ? r.stdout : r.stderr; break;
@@ -216,11 +216,11 @@ const DashboardModule = (() => {
         const state = ConfigManager.captureCurrentState();
         const name = 'snapshot-' + Date.now();
         ConfigManager.saveProfile(name, state);
-        r = `📸 Снимок сохранён: "${name}"`;
+        r = `📸 Snapshot saved: "${name}"`;
         break;
     }
     out.textContent = r || '';
-    App.toast('Готово', 'success');
+    App.toast('Done', 'success');
   }
 
   function escHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }

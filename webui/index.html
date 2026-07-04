@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -24,31 +24,31 @@
     </header>
     <a class="active" data-page="dashboard" onclick="App.navigate('dashboard')">
       <i class="material-symbols-outlined">dashboard</i>
-      <div>Главная</div>
+      <div>Dashboard</div>
     </a>
     <a data-page="packages" onclick="App.navigate('packages')">
       <i class="material-symbols-outlined">inventory_2</i>
-      <div>Пакеты</div>
+      <div>Packages</div>
     </a>
     <a data-page="settings" onclick="App.navigate('settings')">
       <i class="material-symbols-outlined">tune</i>
-      <div>Настройки</div>
+      <div>Settings</div>
     </a>
     <a data-page="display" onclick="App.navigate('display')">
       <i class="material-symbols-outlined">screenshot_monitor</i>
-      <div>Экран</div>
+      <div>Display</div>
     </a>
     <a data-page="performance" onclick="App.navigate('performance')">
       <i class="material-symbols-outlined">speed</i>
-      <div>Система</div>
+      <div>Performance</div>
     </a>
     <a data-page="network" onclick="App.navigate('network')">
       <i class="material-symbols-outlined">wifi</i>
-      <div>Сеть</div>
+      <div>Network</div>
     </a>
     <a data-page="commands" onclick="App.navigate('commands')">
       <i class="material-symbols-outlined">code</i>
-      <div>Команды</div>
+      <div>Commands</div>
     </a>
   </nav>
 
@@ -88,7 +88,7 @@
         <h6 class="max" id="page-title-bar">ShizuConfigs</h6>
         <div id="status-indicator" class="chip no-elevate status-chip">
           <i class="material-symbols-outlined" id="status-icon">cloud_off</i>
-          <span id="status-text">Нет связи</span>
+          <span id="status-text">No Connection</span>
         </div>
         <button class="circle transparent" id="theme-toggle-btn" onclick="App.toggleTheme()">
           <i class="material-symbols-outlined" id="theme-icon">dark_mode</i>
@@ -110,25 +110,25 @@
         </nav>
       </header>
       <a data-page="dashboard" onclick="App.navigate('dashboard');ui('#nav-drawer')">
-        <i class="material-symbols-outlined">dashboard</i><div>Главная</div>
+        <i class="material-symbols-outlined">dashboard</i><div>Dashboard</div>
       </a>
       <a data-page="packages" onclick="App.navigate('packages');ui('#nav-drawer')">
-        <i class="material-symbols-outlined">inventory_2</i><div>Пакеты</div>
+        <i class="material-symbols-outlined">inventory_2</i><div>Packages</div>
       </a>
       <a data-page="settings" onclick="App.navigate('settings');ui('#nav-drawer')">
-        <i class="material-symbols-outlined">tune</i><div>Настройки</div>
+        <i class="material-symbols-outlined">tune</i><div>Settings</div>
       </a>
       <a data-page="display" onclick="App.navigate('display');ui('#nav-drawer')">
-        <i class="material-symbols-outlined">screenshot_monitor</i><div>Экран</div>
+        <i class="material-symbols-outlined">screenshot_monitor</i><div>Display</div>
       </a>
       <a data-page="performance" onclick="App.navigate('performance');ui('#nav-drawer')">
-        <i class="material-symbols-outlined">speed</i><div>Система</div>
+        <i class="material-symbols-outlined">speed</i><div>Performance</div>
       </a>
       <a data-page="network" onclick="App.navigate('network');ui('#nav-drawer')">
-        <i class="material-symbols-outlined">wifi</i><div>Сеть</div>
+        <i class="material-symbols-outlined">wifi</i><div>Network</div>
       </a>
       <a data-page="commands" onclick="App.navigate('commands');ui('#nav-drawer')">
-        <i class="material-symbols-outlined">code</i><div>Команды</div>
+        <i class="material-symbols-outlined">code</i><div>Commands</div>
       </a>
     </dialog>
 

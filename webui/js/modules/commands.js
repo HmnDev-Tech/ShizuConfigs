@@ -5,82 +5,82 @@
 const CommandsModule = (() => {
   let favorites = [];
   const PRESET_COMMANDS = [
-    { cat: 'Система', name: 'Инфо устройства', cmd: 'getprop ro.product.model && getprop ro.build.version.release', icon: 'smartphone' },
-    { cat: 'Система', name: 'Аптайм', cmd: 'uptime', icon: 'schedule' },
-    { cat: 'Система', name: 'Ядро', cmd: 'uname -a', icon: 'memory' },
-    { cat: 'Система', name: 'Сервисы', cmd: 'dumpsys activity services | head -30', icon: 'miscellaneous_services' },
-    { cat: 'Система', name: 'Top процессы', cmd: 'top -n 1 -b | head -20', icon: 'monitor_heart' },
-    { cat: 'Система', name: 'SELinux', cmd: 'getenforce', icon: 'security' },
-    { cat: 'Система', name: 'Все свойства', cmd: 'getprop', icon: 'list' },
-    { cat: 'Пакеты', name: 'Пользователь', cmd: 'pm list packages -3', icon: 'person' },
-    { cat: 'Пакеты', name: 'Отключённые', cmd: 'pm list packages -d', icon: 'block' },
-    { cat: 'Пакеты', name: 'Количество', cmd: 'pm list packages | wc -l', icon: 'numbers' },
-    { cat: 'Настройки', name: 'Global', cmd: 'settings list global', icon: 'public' },
-    { cat: 'Настройки', name: 'Secure', cmd: 'settings list secure', icon: 'lock' },
-    { cat: 'Настройки', name: 'System', cmd: 'settings list system', icon: 'settings' },
-    { cat: 'Настройки', name: 'Анимации', cmd: 'settings get global window_animation_scale && settings get global transition_animation_scale && settings get global animator_duration_scale', icon: 'animation' },
-    { cat: 'Сеть', name: 'WiFi', cmd: 'dumpsys wifi | head -20', icon: 'wifi' },
-    { cat: 'Сеть', name: 'IP адрес', cmd: 'ip addr show wlan0', icon: 'lan' },
-    { cat: 'Сеть', name: 'DNS', cmd: 'getprop net.dns1 && getprop net.dns2', icon: 'dns' },
-    { cat: 'Экран', name: 'Размер и DPI', cmd: 'wm size && wm density', icon: 'aspect_ratio' },
-    { cat: 'Железо', name: 'Батарея', cmd: 'dumpsys battery', icon: 'battery_full' },
-    { cat: 'Железо', name: 'CPU', cmd: 'cat /proc/cpuinfo', icon: 'developer_board' },
-    { cat: 'Железо', name: 'Память', cmd: 'cat /proc/meminfo | head -10', icon: 'memory' },
-    { cat: 'Железо', name: 'Диск', cmd: 'df -h', icon: 'hard_drive' },
-    { cat: 'Железо', name: 'Термо', cmd: 'dumpsys thermalservice', icon: 'thermostat' },
+    { cat: 'System', name: 'Device Info', cmd: 'getprop ro.product.model && getprop ro.build.version.release', icon: 'smartphone' },
+    { cat: 'System', name: 'Uptime', cmd: 'uptime', icon: 'schedule' },
+    { cat: 'System', name: 'Kernel', cmd: 'uname -a', icon: 'memory' },
+    { cat: 'System', name: 'Services', cmd: 'dumpsys activity services | head -30', icon: 'miscellaneous_services' },
+    { cat: 'System', name: 'Top Processes', cmd: 'top -n 1 -b | head -20', icon: 'monitor_heart' },
+    { cat: 'System', name: 'SELinux', cmd: 'getenforce', icon: 'security' },
+    { cat: 'System', name: 'All Properties', cmd: 'getprop', icon: 'list' },
+    { cat: 'Packages', name: 'Third-party', cmd: 'pm list packages -3', icon: 'person' },
+    { cat: 'Packages', name: 'Disabled', cmd: 'pm list packages -d', icon: 'block' },
+    { cat: 'Packages', name: 'Total Count', cmd: 'pm list packages | wc -l', icon: 'numbers' },
+    { cat: 'Settings', name: 'Global', cmd: 'settings list global', icon: 'public' },
+    { cat: 'Settings', name: 'Secure', cmd: 'settings list secure', icon: 'lock' },
+    { cat: 'Settings', name: 'System', cmd: 'settings list system', icon: 'settings' },
+    { cat: 'Settings', name: 'Animations', cmd: 'settings get global window_animation_scale && settings get global transition_animation_scale && settings get global animator_duration_scale', icon: 'animation' },
+    { cat: 'Network', name: 'WiFi', cmd: 'dumpsys wifi | head -20', icon: 'wifi' },
+    { cat: 'Network', name: 'IP Address', cmd: 'ip addr show wlan0', icon: 'lan' },
+    { cat: 'Network', name: 'DNS', cmd: 'getprop net.dns1 && getprop net.dns2', icon: 'dns' },
+    { cat: 'Display', name: 'Size & DPI', cmd: 'wm size && wm density', icon: 'aspect_ratio' },
+    { cat: 'Hardware', name: 'Battery', cmd: 'dumpsys battery', icon: 'battery_full' },
+    { cat: 'Hardware', name: 'CPU', cmd: 'cat /proc/cpuinfo', icon: 'developer_board' },
+    { cat: 'Hardware', name: 'Memory', cmd: 'cat /proc/meminfo | head -10', icon: 'memory' },
+    { cat: 'Hardware', name: 'Storage', cmd: 'df -h', icon: 'hard_drive' },
+    { cat: 'Hardware', name: 'Thermal', cmd: 'dumpsys thermalservice', icon: 'thermostat' },
   ];
 
   function render() {
     const cats = [...new Set(PRESET_COMMANDS.map(c => c.cat))];
     return `
-      <h5><i class="material-symbols-outlined" style="vertical-align:middle">code</i> Команды</h5>
-      <p style="color:var(--on-surface-variant)">Терминал и конструктор команд</p>
+      <h5><i class="material-symbols-outlined" style="vertical-align:middle">code</i> Commands</h5>
+      <p style="color:var(--on-surface-variant)">Terminal and Command Builder</p>
 
       <div id="cmd-no-conn" style="display:none">
-        <article class="not-connected-card"><i class="material-symbols-outlined">power_off</i><h6>Подключите Shizuku</h6></article>
+        <article class="not-connected-card"><i class="material-symbols-outlined">power_off</i><h6>Connect Shizuku</h6></article>
       </div>
       <div id="cmd-content">
         <article class="no-padding" style="margin-bottom:16px">
           <div class="padding">
             <div class="row no-wrap" style="align-items:center;gap:10px;margin-bottom:12px">
               <button class="circle small tertiary-container"><i class="material-symbols-outlined">terminal</i></button>
-              <h6 class="small no-margin max">Терминал</h6>
+              <h6 class="small no-margin max">Terminal</h6>
             </div>
             <div class="field label suffix border">
               <input id="cmd-input" onkeydown="if(event.key==='Enter')CommandsModule.execute()">
-              <label>Команда</label>
+              <label>Command</label>
               <i class="material-symbols-outlined" style="cursor:pointer" onclick="CommandsModule.execute()">play_arrow</i>
             </div>
             <div class="row" style="gap:6px;flex-wrap:wrap">
-              <button class="small" onclick="CommandsModule.execute()"><i class="material-symbols-outlined">play_arrow</i> Выполнить</button>
-              <button class="small border" onclick="CommandsModule.addFavorite()"><i class="material-symbols-outlined">star</i> Сохранить</button>
-              <button class="small border" onclick="CommandsModule.clearOutput()"><i class="material-symbols-outlined">delete</i> Очистить</button>
+              <button class="small" onclick="CommandsModule.execute()"><i class="material-symbols-outlined">play_arrow</i> Run</button>
+              <button class="small border" onclick="CommandsModule.addFavorite()"><i class="material-symbols-outlined">star</i> Save</button>
+              <button class="small border" onclick="CommandsModule.clearOutput()"><i class="material-symbols-outlined">delete</i> Clear</button>
             </div>
             <div id="cmd-output" class="terminal-output" style="margin-top:12px;min-height:50px"></div>
           </div>
         </article>
 
-        <h6 class="small" style="color:var(--on-surface-variant);margin-bottom:8px"><i class="material-symbols-outlined" style="font-size:18px;vertical-align:middle">star</i> Избранное</h6>
+        <h6 class="small" style="color:var(--on-surface-variant);margin-bottom:8px"><i class="material-symbols-outlined" style="font-size:18px;vertical-align:middle">star</i> Favorites</h6>
         <div id="cmd-favorites" style="margin-bottom:16px"></div>
 
-        <h6 class="small" style="color:var(--on-surface-variant);margin-bottom:8px"><i class="material-symbols-outlined" style="font-size:18px;vertical-align:middle">library_books</i> Библиотека</h6>
+        <h6 class="small" style="color:var(--on-surface-variant);margin-bottom:8px"><i class="material-symbols-outlined" style="font-size:18px;vertical-align:middle">library_books</i> Library</h6>
         <nav class="scroll" style="margin-bottom:8px">
           ${cats.map((c,i) => `<a class="chip ${i===0?'fill active':'border'}" data-cat="${c}" onclick="CommandsModule.showPresetCat('${c}',this)">${c}</a>`).join('')}
         </nav>
         <div id="cmd-presets" style="margin-bottom:16px"></div>
 
-        <h6 class="small" style="color:var(--on-surface-variant);margin-bottom:8px"><i class="material-symbols-outlined" style="font-size:18px;vertical-align:middle">history</i> История</h6>
+        <h6 class="small" style="color:var(--on-surface-variant);margin-bottom:8px"><i class="material-symbols-outlined" style="font-size:18px;vertical-align:middle">history</i> History</h6>
         <div id="cmd-history"></div>
-        <button class="small border" style="margin-top:8px" onclick="CommandsModule.clearHistory()"><i class="material-symbols-outlined">clear_all</i> Очистить</button>
+        <button class="small border" style="margin-top:8px" onclick="CommandsModule.clearHistory()"><i class="material-symbols-outlined">clear_all</i> Clear</button>
 
-        <h6 class="small" style="margin:20px 0 10px;color:var(--on-surface-variant)"><i class="material-symbols-outlined" style="font-size:18px;vertical-align:middle">description</i> Мульти-скрипт</h6>
+        <h6 class="small" style="margin:20px 0 10px;color:var(--on-surface-variant)"><i class="material-symbols-outlined" style="font-size:18px;vertical-align:middle">description</i> Multi-script</h6>
         <article class="no-padding">
           <div class="padding">
             <div class="field label border">
               <textarea id="cmd-script" rows="4"></textarea>
-              <label>Команды (по одной на строку)</label>
+              <label>Commands (one per line)</label>
             </div>
-            <button class="small" onclick="CommandsModule.runScript()"><i class="material-symbols-outlined">play_arrow</i> Запустить</button>
+            <button class="small" onclick="CommandsModule.runScript()"><i class="material-symbols-outlined">play_arrow</i> Execute</button>
             <div id="cmd-script-output" class="terminal-output" style="margin-top:12px;display:none"></div>
           </div>
         </article>
@@ -92,7 +92,7 @@ const CommandsModule = (() => {
     document.getElementById('cmd-no-conn').style.display = conn ? 'none' : 'block';
     document.getElementById('cmd-content').style.display = conn ? 'block' : 'none';
     loadFavorites();
-    showPresetCat('Система');
+    showPresetCat('System');
     renderHistory();
   }
 
@@ -117,7 +117,7 @@ const CommandsModule = (() => {
     if (!cmd || favorites.includes(cmd)) return;
     favorites.push(cmd);
     saveFavorites(); loadFavorites();
-    App.toast('Добавлено в избранное', 'success');
+    App.toast('Added to favorites', 'success');
   }
 
   function loadFavorites() {
@@ -125,7 +125,7 @@ const CommandsModule = (() => {
     const el = document.getElementById('cmd-favorites');
     if (!el) return;
     if (!favorites.length) {
-      el.innerHTML = '<p class="small" style="color:var(--on-surface-variant)">Нет избранных</p>';
+      el.innerHTML = '<p class="small" style="color:var(--on-surface-variant)">No favorites</p>';
       return;
     }
     el.innerHTML = favorites.map((f,i) => `
@@ -159,7 +159,7 @@ const CommandsModule = (() => {
     const el = document.getElementById('cmd-history');
     if (!el) return;
     const hist = ShellBridge.getHistory().slice(0, 20);
-    if (!hist.length) { el.innerHTML = '<p class="small" style="color:var(--on-surface-variant)">Пусто</p>'; return; }
+    if (!hist.length) { el.innerHTML = '<p class="small" style="color:var(--on-surface-variant)">Empty</p>'; return; }
     el.innerHTML = hist.map(h => `
       <div class="setting-row" onclick="CommandsModule.useCmd('${escAttr(h.cmd)}')" style="cursor:pointer">
         <i class="material-symbols-outlined">${h.result?.ok ? 'check_circle' : 'cancel'}</i>
@@ -170,7 +170,7 @@ const CommandsModule = (() => {
       </div>`).join('');
   }
 
-  function clearHistory() { ShellBridge.clearHistory(); renderHistory(); App.toast('История очищена', 'success'); }
+  function clearHistory() { ShellBridge.clearHistory(); renderHistory(); App.toast('History cleared', 'success'); }
 
   function runScript() {
     if (!App.requireConnection()) return;
@@ -185,8 +185,8 @@ const CommandsModule = (() => {
       if (r.stdout) out.innerHTML += escHtml(r.stdout) + '\n';
       if (r.stderr) out.innerHTML += `<span class="cmd-error">${escHtml(r.stderr)}</span>\n`;
     });
-    out.innerHTML += `<span class="cmd-info">Скрипт завершён (${lines.length} команд)</span>`;
-    App.toast(`Выполнено: ${lines.length} команд`, 'success');
+    out.innerHTML += `<span class="cmd-info">Script finished (${lines.length} commands)</span>`;
+    App.toast(`Executed: ${lines.length} commands`, 'success');
   }
 
   function escHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }

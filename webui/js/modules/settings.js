@@ -8,24 +8,24 @@ const SettingsModule = (() => {
   let search = '';
 
   const PRESETS = [
-    { name: 'Выкл. анимации', cmds: ['settings put global window_animation_scale 0','settings put global transition_animation_scale 0','settings put global animator_duration_scale 0'], icon: 'animation' },
-    { name: 'Быстрые (0.5x)', cmds: ['settings put global window_animation_scale 0.5','settings put global transition_animation_scale 0.5','settings put global animator_duration_scale 0.5'], icon: 'speed' },
-    { name: 'Стандарт (1x)', cmds: ['settings put global window_animation_scale 1.0','settings put global transition_animation_scale 1.0','settings put global animator_duration_scale 1.0'], icon: 'replay' },
-    { name: 'Вкл. ADB', cmds: ['settings put global adb_enabled 1'], icon: 'usb' },
-    { name: 'Показать касания', cmds: ['settings put system show_touches 1'], icon: 'touch_app' },
-    { name: 'Скрыть касания', cmds: ['settings put system show_touches 0'], icon: 'do_not_touch' },
+    { name: 'Turn off animations', cmds: ['settings put global window_animation_scale 0','settings put global transition_animation_scale 0','settings put global animator_duration_scale 0'], icon: 'animation' },
+    { name: 'Fast (0.5x)', cmds: ['settings put global window_animation_scale 0.5','settings put global transition_animation_scale 0.5','settings put global animator_duration_scale 0.5'], icon: 'speed' },
+    { name: 'Standard (1x)', cmds: ['settings put global window_animation_scale 1.0','settings put global transition_animation_scale 1.0','settings put global animator_duration_scale 1.0'], icon: 'replay' },
+    { name: 'Enable ADB', cmds: ['settings put global adb_enabled 1'], icon: 'usb' },
+    { name: 'Show touches', cmds: ['settings put system show_touches 1'], icon: 'touch_app' },
+    { name: 'Hide touches', cmds: ['settings put system show_touches 0'], icon: 'do_not_touch' },
   ];
 
   function render() {
     return `
-      <h5><i class="material-symbols-outlined" style="vertical-align:middle">tune</i> Настройки</h5>
-      <p style="color:var(--on-surface-variant)">Чтение и запись системных настроек</p>
+      <h5><i class="material-symbols-outlined" style="vertical-align:middle">tune</i> Settings</h5>
+      <p style="color:var(--on-surface-variant)">Read and write system settings</p>
 
       <div id="set-no-conn" style="display:none">
-        <article class="not-connected-card"><i class="material-symbols-outlined">power_off</i><h6>Подключите Shizuku</h6></article>
+        <article class="not-connected-card"><i class="material-symbols-outlined">power_off</i><h6>Connect Shizuku</h6></article>
       </div>
       <div id="set-content">
-        <h6 class="small" style="color:var(--on-surface-variant);margin-bottom:10px"><i class="material-symbols-outlined" style="font-size:18px;vertical-align:middle">auto_fix_high</i> Быстрые пресеты</h6>
+        <h6 class="small" style="color:var(--on-surface-variant);margin-bottom:10px"><i class="material-symbols-outlined" style="font-size:18px;vertical-align:middle">auto_fix_high</i> Quick Presets</h6>
         <div class="grid-3" style="margin-bottom:20px">
           ${PRESETS.map((p,i) => `
             <article class="no-padding preset-card" onclick="SettingsModule.applyPreset(${i})">
@@ -44,7 +44,7 @@ const SettingsModule = (() => {
 
         <div class="field label suffix border round" style="margin:12px 0">
           <input type="text" id="settings-search" oninput="SettingsModule.onSearch(this.value)">
-          <label>Поиск настроек</label>
+          <label>Search settings</label>
           <i class="material-symbols-outlined">search</i>
         </div>
         <div id="settings-count" style="font-size:.75rem;color:var(--on-surface-variant);margin-bottom:10px"></div>
@@ -52,23 +52,23 @@ const SettingsModule = (() => {
       </div>
 
       <dialog id="settings-edit-dialog">
-        <h6 id="settings-edit-title">Изменить настройку</h6>
+        <h6 id="settings-edit-title">Edit Setting</h6>
         <div class="field label border" style="margin-top:12px">
           <input id="settings-edit-ns" readonly>
-          <label>Пространство</label>
+          <label>Namespace</label>
         </div>
         <div class="field label border">
           <input id="settings-edit-key" readonly>
-          <label>Ключ</label>
+          <label>Key</label>
         </div>
         <div class="field label border">
           <input id="settings-edit-value">
-          <label>Значение</label>
+          <label>Value</label>
         </div>
         <nav class="right-align">
-          <button class="border" onclick="ui('#settings-edit-dialog')">Отмена</button>
-          <button class="error" onclick="SettingsModule.deleteSetting()"><i class="material-symbols-outlined">delete</i> Удалить</button>
-          <button class="primary" onclick="SettingsModule.saveSetting()"><i class="material-symbols-outlined">save</i> Сохранить</button>
+          <button class="border" onclick="ui('#settings-edit-dialog')">Cancel</button>
+          <button class="error" onclick="SettingsModule.deleteSetting()"><i class="material-symbols-outlined">delete</i> Delete</button>
+          <button class="primary" onclick="SettingsModule.saveSetting()"><i class="material-symbols-outlined">save</i> Save</button>
         </nav>
       </dialog>`;
   }
@@ -93,10 +93,10 @@ const SettingsModule = (() => {
 
   function renderList() {
     const filtered = search ? settings.filter(s => s.key.toLowerCase().includes(search.toLowerCase()) || s.value.toLowerCase().includes(search.toLowerCase())) : settings;
-    document.getElementById('settings-count').textContent = `${filtered.length} настроек в ${namespace}`;
+    document.getElementById('settings-count').textContent = `${filtered.length} settings in ${namespace}`;
     const el = document.getElementById('settings-list');
     if (!filtered.length) {
-      el.innerHTML = '<article class="not-connected-card" style="padding:24px"><i class="material-symbols-outlined">search_off</i><p>Не найдено</p></article>';
+      el.innerHTML = '<article class="not-connected-card" style="padding:24px"><i class="material-symbols-outlined">search_off</i><p>Not found</p></article>';
       return;
     }
     el.innerHTML = filtered.slice(0, 100).map(s => `
@@ -104,10 +104,10 @@ const SettingsModule = (() => {
         <i class="material-symbols-outlined">key</i>
         <div class="setting-row-content">
           <div class="setting-row-title">${escHtml(s.key)}</div>
-          <div class="setting-row-desc">${escHtml(s.value || '(пусто)')}</div>
+          <div class="setting-row-desc">${escHtml(s.value || '(empty)')}</div>
         </div>
         <i class="material-symbols-outlined" style="font-size:18px;color:var(--on-surface-variant)">edit</i>
-      </div>`).join('') + (filtered.length > 100 ? `<p class="center-align small" style="color:var(--on-surface-variant)">+ ещё ${filtered.length-100}</p>` : '');
+      </div>`).join('') + (filtered.length > 100 ? `<p class="center-align small" style="color:var(--on-surface-variant)">+ ${filtered.length-100} more</p>` : '');
   }
 
   function setNamespace(ns, el) {
@@ -132,7 +132,7 @@ const SettingsModule = (() => {
     const key = document.getElementById('settings-edit-key').value;
     const val = document.getElementById('settings-edit-value').value;
     const r = ShellBridge.exec(`settings put ${ns} ${key} ${val}`);
-    App.toast(r.ok ? `${key} обновлён` : `Ошибка: ${r.stderr}`, r.ok ? 'success' : 'error');
+    App.toast(r.ok ? `${key} updated` : `Error: ${r.stderr}`, r.ok ? 'success' : 'error');
     ui('#settings-edit-dialog'); loadSettings();
   }
 
@@ -140,14 +140,14 @@ const SettingsModule = (() => {
     const ns = document.getElementById('settings-edit-ns').value;
     const key = document.getElementById('settings-edit-key').value;
     const r = ShellBridge.exec(`settings delete ${ns} ${key}`);
-    App.toast(r.ok ? `${key} удалён` : `Ошибка: ${r.stderr}`, r.ok ? 'success' : 'error');
+    App.toast(r.ok ? `${key} deleted` : `Error: ${r.stderr}`, r.ok ? 'success' : 'error');
     ui('#settings-edit-dialog'); loadSettings();
   }
 
   function applyPreset(idx) {
     if (!App.requireConnection()) return;
     PRESETS[idx].cmds.forEach(cmd => ShellBridge.exec(cmd));
-    App.toast(`Применено: ${PRESETS[idx].name}`, 'success');
+    App.toast(`Applied: ${PRESETS[idx].name}`, 'success');
     loadSettings();
   }
 
